@@ -2268,125 +2268,107 @@
 }
 
         // Render jobs
-        function renderJobs() {
-            const grid = document.getElementById('jobsGrid');
-            grid.innerHTML = '';
+async function renderJobs() {
 
-            jobs.forEach((job, i) => {
-                const card = document.createElement('div');
-                card.className = 'job-card';
+    if (!window.currentResumeId) {
+        alert("No resume found.");
+        return;
+    }
 
-                const skillsHTML = job.missing.length > 0
-                    ? `<div class="skills-group">
-                         <div class="skills-title">Skills to Acquire</div>
-                         <div class="skills-list">
-                           ${job.missing.map(s => `<span class="skill-badge missing">${s}</span>`).join('')}
-                         </div>
-                       </div>`
-                    : `<div class="perfect-banner">
-                         <span class="icon">✓</span>
-                         <strong>Perfect Match — All requirements met</strong>
-                       </div>`;
+    const response = await fetch(
+        `http://localhost:7071/api/recommendJobs?resume_id=${window.currentResumeId}`
+    );
 
-                const btnHTML = job.missing.length > 0
-                    ? `<button class="btn-job btn-primary-job" onclick="showRoadmap(${job.id})">View Development Plan</button>`
-                    : `<button class="btn-job btn-primary-job">Submit Application</button>`;
+    const data = await response.json();
 
-                card.innerHTML = `
-                    <div class="job-header">
-                        <div>
-                            <h3 class="job-title">${job.title}</h3>
-                            <div class="job-company">${job.company}</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div class="match-score">${job.match}</div>
-                            <div class="match-label">Match</div>
-                        </div>
-                    </div>
-                    
-                    <div class="job-progress">
-                        <div class="progress-header">
-                            <span>Compatibility</span>
-                            <span>${job.match}%</span>
-                        </div>
-                        <div class="progress-track">
-                            <div class="progress-bar" style="width: 0%" data-width="${job.match}%"></div>
-                        </div>
-                    </div>
+    const jobs = data.recommendations;
+    const grid = document.getElementById('jobsGrid');
+    grid.innerHTML = '';
 
-                    <div class="skills-group">
-                        <div class="skills-title">Your Qualifications</div>
-                        <div class="skills-list">
-                            ${job.acquired.map(s => `<span class="skill-badge acquired">${s}</span>`).join('')}
-                        </div>
-                    </div>
+    jobs.forEach((job, i) => {
 
-                    ${skillsHTML}
+        const matchPercent = Math.round(job.similarity_score * 100);
 
-                    <div class="job-actions">
-                        ${btnHTML}
-                        <button class="btn-job btn-secondary-job">Save Position</button>
-                    </div>
-                `;
+        const skillsHTML = job.missing_skills.length > 0
+            ? `<div class="skills-group">
+                 <div class="skills-title">Skills to Acquire</div>
+                 <div class="skills-list">
+                   ${job.missing_skills.map(s => `<span class="skill-badge missing">${s}</span>`).join('')}
+                 </div>
+               </div>`
+            : `<div class="perfect-banner">
+                 <span class="icon">✓</span>
+                 <strong>Perfect Match — All requirements met</strong>
+               </div>`;
 
-                grid.appendChild(card);
+        const roadmapButton = job.roadmap
+            ? `<button class="btn-job btn-primary-job" onclick="showRoadmap('${job.roadmap.replace(/'/g, "\\'")}')">View Development Plan</button>`
+            : `<button class="btn-job btn-primary-job">Apply Now</button>`;
 
-                setTimeout(() => {
-                    card.querySelector('.progress-bar').style.width = card.querySelector('.progress-bar').dataset.width;
-                }, 200 + i * 150);
-            });
-        }
+        const card = document.createElement('div');
+        card.className = 'job-card';
+
+        card.innerHTML = `
+            <div class="job-header">
+                <div>
+                    <h3 class="job-title">Job ID ${job.job_id}</h3>
+                    <div class="job-company">AI Recommended Position</div>
+                </div>
+                <div style="text-align: right;">
+                    <div class="match-score">${matchPercent}</div>
+                    <div class="match-label">Match</div>
+                </div>
+            </div>
+
+            <div class="job-progress">
+                <div class="progress-header">
+                    <span>Compatibility</span>
+                    <span>${matchPercent}%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-bar" style="width: ${matchPercent}%"></div>
+                </div>
+            </div>
+
+            ${skillsHTML}
+
+            <div class="job-actions">
+                ${roadmapButton}
+                <button class="btn-job btn-secondary-job">Save Position</button>
+            </div>
+        `;
+
+        grid.appendChild(card);
+    });
+}
 
         // Show roadmap
-        function showRoadmap(id) {
-            const job = jobs.find(j => j.id === id);
-            if (!job?.roadmap) return;
+function showRoadmap(jobId) {
+    const job = jobs.find(j => j.job_id === jobId);
+    if (!job || !job.roadmap) return;
 
-            document.getElementById('modalTitle').textContent = job.title;
-            document.getElementById('modalSubtitle').textContent = job.company;
-            document.getElementById('statWeeks').textContent = job.roadmap.weeks;
-            document.getElementById('statCerts').textContent = job.roadmap.certs;
-            document.getElementById('statProjects').textContent = job.roadmap.projects;
+    // Modal title info
+    document.getElementById('modalTitle').textContent = `Job ID ${job.job_id}`;
+    document.getElementById('modalSubtitle').textContent = 'Personalized Learning Roadmap';
 
-            const timeline = document.getElementById('timelineContent');
-            timeline.innerHTML = job.roadmap.timeline.map(w => `
-                <div class="timeline-item">
-                    <div class="week-number">Week ${w.week}</div>
-                    <div class="week-title">${w.title}</div>
-                    <div class="week-content">
-                        <ul>
-                            ${w.tasks.map(t => `<li>${t}</li>`).join('')}
-                        </ul>
-                    </div>
-                </div>
-            `).join('');
+    // Hide stats (since backend doesn't send weeks/projects count)
+    document.getElementById('statWeeks').textContent = '-';
+    document.getElementById('statCerts').textContent = '-';
+    document.getElementById('statProjects').textContent = '-';
 
-            if (job.roadmap.certifications) {
-                timeline.innerHTML += `
-                    <div class="certifications">
-                        <h4>Professional Certifications</h4>
-                        <div class="cert-grid">
-                            ${job.roadmap.certifications.map(c => `
-                                <div class="cert-item">
-                                    <span class="cert-icon">◆</span>
-                                    <span>${c}</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
+    // Convert roadmap text into readable HTML
+    const timeline = document.getElementById('timelineContent');
+    timeline.innerHTML = `
+        <div class="roadmap-text">
+            ${job.roadmap
+                .split('\n')
+                .map(line => `<p>${line}</p>`)
+                .join('')}
+        </div>
+    `;
 
-            document.getElementById('roadmapModal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('roadmapModal').classList.remove('active');
-        }
-
-        function downloadPDF() {
-            alert('PDF Generation\n\nYour comprehensive development plan will be prepared for download.');
-        }
+    document.getElementById('roadmapModal').classList.add('active');
+}
 
         // Render skills
         function renderSkills() {
