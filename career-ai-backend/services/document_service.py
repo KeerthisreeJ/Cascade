@@ -1,6 +1,7 @@
 import os
 from azure.ai.formrecognizer import DocumentAnalysisClient
 from azure.core.credentials import AzureKeyCredential
+from services.grok_service import generate_resume_feedback
 
 
 def get_client():
@@ -16,26 +17,25 @@ def get_client():
     )
 
 
-def analyze_resume(file_bytes: bytes):
-
+def analyze_resume(file_bytes: bytes) -> dict:
+    """
+    Extracts text via Azure Document Intelligence,
+    then calls Groq to generate real AI resume feedback.
+    """
     client = get_client()
 
-    poller = client.begin_analyze_document(
-        "prebuilt-layout",
-        file_bytes
-    )
-
+    poller = client.begin_analyze_document("prebuilt-layout", file_bytes)
     result = poller.result()
 
     extracted_text = ""
-
     for page in result.pages:
         for line in page.lines:
             extracted_text += line.content + "\n"
 
-    ai_feedback = "Resume evaluation temporarily disabled"
+    # Real AI feedback from Groq
+    ai_feedback = generate_resume_feedback(extracted_text)
 
     return {
         "extracted_text": extracted_text,
-        "ai_feedback": ai_feedback
+        "ai_feedback":    ai_feedback,
     }
