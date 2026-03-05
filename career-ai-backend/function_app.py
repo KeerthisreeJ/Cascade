@@ -294,13 +294,22 @@ def submit_audio_answer(req: func.HttpRequest) -> func.HttpResponse:
         # Convert WebM to true PCM WAV
         # ─────────────────────────
         try:
+            import shutil
             from pydub import AudioSegment
             import pydub.utils
-            
-            # Winget installs ffmpeg here for the Administrator account
-            ffmpeg_path = r"C:\Users\Administrator\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.0.1-full_build\bin\ffmpeg.exe"
-            ffprobe_path = r"C:\Users\Administrator\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.0.1-full_build\bin\ffprobe.exe"
-            
+
+            # Try PATH first, then fall back to known WinGet install location
+            ffmpeg_path  = shutil.which("ffmpeg")
+            ffprobe_path = shutil.which("ffprobe")
+
+            if not ffmpeg_path:
+                winget_base = r"C:\Users\hp\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.0.1-full_build\bin"
+                ffmpeg_path  = os.path.join(winget_base, "ffmpeg.exe")
+                ffprobe_path = os.path.join(winget_base, "ffprobe.exe")
+
+            if not os.path.exists(ffmpeg_path):
+                raise RuntimeError(f"ffmpeg not found at: {ffmpeg_path}")
+
             AudioSegment.converter = ffmpeg_path
             AudioSegment.ffmpeg = ffmpeg_path
             pydub.utils.get_prober_name = lambda: ffprobe_path
@@ -311,8 +320,10 @@ def submit_audio_answer(req: func.HttpRequest) -> func.HttpResponse:
             logging.info("Successfully transcoded WebM to WAV using pydub/ffmpeg")
         except Exception as e:
             logging.error(f"Failed to transcode audio with pydub: {e}")
-            # Fallback to the webm path if transcode fails (though Speech SDK will reject it)
-            wav_path = webm_path
+            return json_response({
+                "success": False,
+                "error": f"Audio conversion failed — ensure ffmpeg is installed. Detail: {str(e)}"
+            }, 500)
 
         # ─────────────────────────
         # Speech → Text

@@ -2081,26 +2081,35 @@
                 </div>
 
                 <div class="video-container">
-                    <div class="video-main">
-                        <div style="margin-top:15px; font-size:14px; color:#333;">
-                            <div id="confidenceScore">Confidence: --</div>
-                            <div id="emotionLabel">Emotion: --</div>
-                        </div>
-                        <video id="userVideo" autoplay muted playsinline></video>
-                        <div class="video-overlay">
-                            <div class="video-status" id="videoStatus">Camera Initializing...</div>
+                    <div class="video-main"
+                        style="position: relative; background: #000; border-radius: 8px; overflow: hidden; aspect-ratio: 16/9; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <video id="userVideo" autoplay muted playsinline
+                            style="width: 100%; height: 100%; object-fit: cover;"></video>
+                        <div class="video-overlay" id="videoOverlay"
+                            style="position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; pointer-events:none;">
+                            <div class="video-status" id="videoStatus"
+                                style="color:white; font-size:18px; letter-spacing:1px;">Camera Initializing...</div>
                         </div>
                     </div>
 
-                    <div class="video-controls">
-                        <button class="control-button" id="cameraToggle" onclick="toggleCamera()">
-                            <span>📹</span>
-                            <span>Camera</span>
-                        </button>
-                        <button class="control-button" id="micToggle" onclick="toggleVideoMic()">
-                            <span>🎤</span>
-                            <span>Microphone</span>
-                        </button>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding: 0 10px;">
+                        <div style="font-size: 14px; color: var(--navy); font-weight: 500;">
+                            <span id="confidenceScore">Confidence: --</span>
+                            <span style="margin: 0 15px; color: #ccc;">|</span>
+                            <span id="emotionLabel">Emotion: --</span>
+                        </div>
+
+                        <div class="video-controls" style="display: flex; gap: 10px;">
+                            <button class="control-button" id="cameraToggle" onclick="toggleCamera()"
+                                style="padding: 8px 16px; border-radius: 4px; border: 1px solid var(--border); background: var(--cream); cursor: pointer;">
+                                <span>Camera</span>
+                            </button>
+                            <button class="control-button" id="micToggle" onclick="toggleVideoMic()"
+                                style="padding: 8px 16px; border-radius: 4px; border: 1px solid var(--border); background: var(--cream); cursor: pointer;">
+                                <span>Microphone</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="interview-questions">
@@ -3243,16 +3252,69 @@
                             method: 'POST', body: formData
                         });
                         const data = await res.json();
-                        // Show AI feedback below the question
+
+                        // Find or create feedback container below the question
                         const feedbackDiv = document.getElementById('videoFeedback') ||
                             (() => {
                                 const d = document.createElement('div'); d.id = 'videoFeedback';
                                 d.style.cssText = 'margin-top:20px;padding:20px;background:var(--cream);border:1px solid var(--border);font-size:16px;line-height:1.7;';
-                                document.querySelector('.interview-questions').appendChild(d); return d;
+                                document.querySelector('.interview-questions').appendChild(d);
+                                return d;
                             })();
-                        feedbackDiv.innerHTML = `<strong>Transcript:</strong> ${data.transcript || '(empty)'}<br><br>
-                            <strong>Overall Score:</strong> ${data.overall_score}/100<br>
-                            <strong>Feedback:</strong> ${data.feedback}`;
+
+                        // Extract detailed feedback or fallback to string if backend returned old format
+                        let feedbackHtml = '';
+                        if (typeof data.feedback === 'object' && data.feedback !== null) {
+                            const fb = data.feedback;
+
+                            const renderList = (items) => {
+                                if (!items || !items.length) return 'None specified.';
+                                return `<ul style="margin: 5px 0 15px 20px; padding: 0;">` +
+                                    items.map(i => `<li style="margin-bottom: 4px;">${i}</li>`).join('') +
+                                    `</ul>`;
+                            };
+
+                            feedbackHtml = `
+                                <div style="margin-top: 15px;">
+                                    <strong style="color: var(--navy); font-size: 1.1em; display: inline-block; margin-bottom: 8px;">Detailed Analysis:</strong>
+                                    
+                                    <div style="color: #2e7d32; margin-top: 10px;"><strong>Strengths:</strong></div>
+                                    ${renderList(fb.strengths)}
+                                    
+                                    <div style="color: #c62828;"><strong>Areas of Improvement (Delivery & Content):</strong></div>
+                                    ${renderList(fb.areas_of_improvement)}
+                                    
+                                    <div style="color: var(--navy);"><strong>Vocabulary & Tone:</strong></div>
+                                    <p style="margin: 5px 0 15px 0;">${fb.vocabulary_and_delivery || 'No analysis available.'}</p>
+                                    
+                                    <div style="color: #1565c0;"><strong>Actionable Tips:</strong></div>
+                                    ${renderList(fb.actionable_tips)}
+                                </div>
+                            `;
+                        } else {
+                            feedbackHtml = `<strong>Feedback:</strong> ${data.feedback || 'None available.'}`;
+                        }
+
+                        // Also include video metrics if available
+                        const confidenceScoreEl = document.getElementById("confidenceScore");
+                        const emotionLabelEl = document.getElementById("emotionLabel");
+
+                        let currentVideoConfidence = confidenceScoreEl ? confidenceScoreEl.textContent.replace('Confidence: ', '') : 'N/A';
+                        let currentVideoEmotion = emotionLabelEl ? emotionLabelEl.textContent.replace('Emotion: ', '') : 'N/A';
+
+                        feedbackHtml = `
+                            <div style="border-bottom: 1px solid #ccc; padding-bottom: 15px; margin-bottom: 15px;">
+                                <strong>Transcript:</strong> <em>${data.transcript || '(empty)'}</em><br><br>
+                                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                                    <div><strong>Overall Answer Score:</strong> <span style="font-size: 1.2em; font-weight: bold; color: var(--navy);">${data.overall_score || 0}/100</span></div>
+                                    <div><strong>Live Video Confidence:</strong> ${currentVideoConfidence}</div>
+                                    <div><strong>Detected Emotion:</strong> <span style="text-transform: capitalize;">${currentVideoEmotion}</span></div>
+                                </div>
+                            </div>
+                            ${feedbackHtml}
+                        `;
+
+                        feedbackDiv.innerHTML = feedbackHtml;
                     } catch (err) {
                         console.error('submitAudioAnswer error:', err);
                     } finally {
