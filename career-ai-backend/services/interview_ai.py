@@ -93,7 +93,7 @@ def evaluate_answer(question: str, answer: str) -> dict:
             "feedback": "No speech detected. Please make sure your microphone is working and try again."
         }
 
-    prompt = f"""You are an expert technical interviewer.
+    prompt = f"""You are an expert technical and HR interviewer.
 
 Question:
 {question}
@@ -101,24 +101,47 @@ Question:
 Candidate Answer:
 {answer}
 
-Evaluate the answer and return ONLY valid JSON (no markdown, no extra text):
+Evaluate the answer and return ONLY valid JSON (no markdown, no extra text).
+The feedback must be highly detailed and constructive, pointing out specific words used or omitted.
 
+Format REQUIRED:
 {{
-  "technical_score": <0-100>,
-  "communication_score": <0-100>,
-  "confidence_score": <0-100>,
-  "overall_score": <0-100>,
-  "feedback": "<short, 1-2 sentence improvement advice>"
+  "technical_score": <int 0-100>,
+  "communication_score": <int 0-100>,
+  "confidence_score": <int 0-100>,
+  "overall_score": <int 0-100>,
+  "feedback": {{
+      "strengths": ["<point 1>", "<point 2>"],
+      "areas_of_improvement": ["<point 1 about filler words, hesitation, or missing technical depth>", "<point 2>"],
+      "vocabulary_and_delivery": "<1 paragraph analyzing their choice of words, sentence structure, and perceived confidence>",
+      "actionable_tips": ["<tip 1 on how to frame the answer better>", "<tip 2>"]
+  }}
 }}
 """
 
-    raw = _call_groq(prompt, temperature=0.2)
+    raw = _call_groq(prompt, temperature=0.3)
 
-    # Strip markdown code fences
-    cleaned = raw.strip()
-    if cleaned.startswith("```"):
-        cleaned = cleaned.split("```")[1]
-        if cleaned.startswith("json"):
-            cleaned = cleaned[4:]
-
-    return json.loads(cleaned.strip())
+    try:
+        # Strip markdown code fences
+        cleaned = raw.strip()
+        if cleaned.startswith("```"):
+            cleaned = cleaned.split("```")[1]
+            if cleaned.startswith("json"):
+                cleaned = cleaned[4:]
+        
+        return json.loads(cleaned.strip())
+    except Exception as e:
+        print(f"Failed to parse AI evaluation JSON. Error: {e}")
+        print(f"Raw AI response:\n{raw}")
+        return {
+            "technical_score": 0,
+            "communication_score": 0,
+            "confidence_score": 0,
+            "overall_score": 0,
+            "feedback": {
+                "strengths": [],
+                "areas_of_improvement": [],
+                "vocabulary_and_delivery": f"Error parsing AI response: {str(e)}",
+                "actionable_tips": ["Please try answering again."]
+            }
+        }
