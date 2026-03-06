@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cascade — Professional Intelligence</title>
+    <title>Cascade â€” Professional Intelligence</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Crimson+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
@@ -365,7 +365,7 @@
         }
 
         .slide-features li::before {
-            content: '—';
+            content: 'â€”';
             position: absolute;
             left: 0;
             color: var(--navy);
@@ -574,7 +574,7 @@
         }
 
         .upload-benefits li::before {
-            content: '✓';
+            content: 'âœ“';
             position: absolute;
             left: 0;
             font-size: 24px;
@@ -1155,7 +1155,7 @@
         }
 
         .week-content li::before {
-            content: '—';
+            content: 'â€”';
             position: absolute;
             left: 0;
             color: var(--navy);
@@ -1800,7 +1800,7 @@
                         </ul>
                     </div>
                     <div class="slide-visual">
-                        <span class="slide-icon">📄</span>
+                        <span class="slide-icon">ðŸ“„</span>
                         <div class="slide-caption">Precision Analysis</div>
                     </div>
                 </div>
@@ -1823,7 +1823,7 @@
                         </ul>
                     </div>
                     <div class="slide-visual">
-                        <span class="slide-icon">🎯</span>
+                        <span class="slide-icon">ðŸŽ¯</span>
                         <div class="slide-caption">Perfect Matches</div>
                     </div>
                 </div>
@@ -1846,7 +1846,7 @@
                         </ul>
                     </div>
                     <div class="slide-visual">
-                        <span class="slide-icon">📊</span>
+                        <span class="slide-icon">ðŸ“Š</span>
                         <div class="slide-caption">Strategic Growth</div>
                     </div>
                 </div>
@@ -1869,14 +1869,14 @@
                         </ul>
                     </div>
                     <div class="slide-visual">
-                        <span class="slide-icon">💼</span>
+                        <span class="slide-icon">ðŸ’¼</span>
                         <div class="slide-caption">Confident Presentation</div>
                     </div>
                 </div>
             </div>
 
-            <button class="slide-nav slide-prev" onclick="changeSlide(-1)">‹</button>
-            <button class="slide-nav slide-next" onclick="changeSlide(1)">›</button>
+            <button class="slide-nav slide-prev" onclick="changeSlide(-1)">â€¹</button>
+            <button class="slide-nav slide-next" onclick="changeSlide(1)">â€º</button>
         </div>
 
         <div class="slide-controls">
@@ -1936,7 +1936,7 @@
             </div>
             <div>
                 <div class="upload-zone" onclick="document.getElementById('fileUpload').click()">
-                    <span class="upload-icon">📄</span>
+                    <span class="upload-icon">ðŸ“„</span>
                     <h3>Submit Resume</h3>
                     <p>Select your professional document</p>
                     <div class="format-list">
@@ -1955,7 +1955,7 @@
         </div>
 
         <div class="success-state" id="success">
-            <span class="success-icon">✓</span>
+            <span class="success-icon">âœ“</span>
             <h3>Analysis Complete</h3>
             <p>Your professional profile has been thoroughly evaluated. We have identified several distinguished
                 opportunities for your consideration.</p>
@@ -2019,13 +2019,13 @@
             <!-- Interview Mode Selection -->
             <div class="interview-mode-selection" id="modeSelection">
                 <div class="mode-card" onclick="startInterview('audio')">
-                    <div class="mode-icon">🎙️</div>
+                    <div class="mode-icon">ðŸŽ™ï¸</div>
                     <h3>Audio Interview</h3>
                     <p>Practice with voice-based responses in an elegant conversational format.</p>
                     <div class="mode-cta">Begin Audio Session</div>
                 </div>
                 <div class="mode-card" onclick="startInterview('video')">
-                    <div class="mode-icon">📹</div>
+                    <div class="mode-icon">ðŸ“¹</div>
                     <h3>Video Interview</h3>
                     <p>Experience a complete video interview with camera and professional feedback.</p>
                     <div class="mode-cta">Begin Video Session</div>
@@ -2058,7 +2058,7 @@
                         </div>
                         <div class="chat-input-controls">
                             <button class="mic-button" id="micButton" onclick="toggleMicrophone()">
-                                <span class="mic-icon">🎤</span>
+                                <span class="mic-icon">ðŸŽ¤</span>
                                 <span class="mic-text">Hold to Speak</span>
                             </button>
                             <button class="type-button" onclick="toggleTypeMode()">
@@ -2119,7 +2119,7 @@
                         </div>
                         <div class="question-actions">
                             <button class="question-button" onclick="startRecording()">
-                                <span id="recordingIcon">⏺</span>
+                                <span id="recordingIcon">âº</span>
                                 <span id="recordingText">Start Recording</span>
                             </button>
                             <button class="question-button secondary" onclick="nextQuestion()">Next Question</button>
@@ -2133,7 +2133,7 @@
     <!-- Modal -->
     <div class="modal" id="roadmapModal">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">×</button>
+            <button class="modal-close" onclick="closeModal()">Ã—</button>
 
             <div class="roadmap-header">
                 <h2 id="modalTitle">Professional Development Plan</h2>
@@ -2292,7 +2292,7 @@
                 formData.append("file", file);
 
                 // Call Azure Function
-                const response = await fetch("https://career-ai-functions.azurewebsites.net/api/processResume", {
+                const response = await fetch("https://career-ai-functions-h4gpa8h5cccsghdz.centralindia-01.azurewebsites.net/api/processResume", {
                     method: "POST",
                     body: formData
                 });
@@ -2345,7 +2345,7 @@
 
             try {
                 const response = await fetch(
-                    `https://career-ai-functions.azurewebsites.net/api/recommendJobs?resume_id=${window.currentResumeId}`
+                    `https://career-ai-functions-h4gpa8h5cccsghdz.centralindia-01.azurewebsites.net/api/recommendJobs?resume_id=${window.currentResumeId}`
                 );
 
                 const data = await response.json();
@@ -2362,14 +2362,14 @@
                     return;
                 }
 
-                // Store roadmaps safely — avoids JSON.stringify breaking onclick HTML
+                // Store roadmaps safely â€” avoids JSON.stringify breaking onclick HTML
                 window.roadmapStore = [];
 
                 jobs.forEach((job, i) => {
 
                     const matchPercent = Math.round((job.similarity_score || 0) * 100);
 
-                    // Match score color: green ≥ 70, yellow ≥ 40, red < 40
+                    // Match score color: green â‰¥ 70, yellow â‰¥ 40, red < 40
                     const matchColor = matchPercent >= 70 ? '#2e7d32'
                         : matchPercent >= 40 ? '#e65100'
                             : '#c62828';
@@ -2383,8 +2383,8 @@
                             </div>
                            </div>`
                         : `<div class="perfect-banner">
-                            <span class="icon">✓</span>
-                            <strong>Perfect Match — All requirements met</strong>
+                            <span class="icon">âœ“</span>
+                            <strong>Perfect Match â€” All requirements met</strong>
                            </div>`;
 
                     // Acquired skills section (only show if there are any)
@@ -2402,9 +2402,9 @@
                     // Salary display
                     const salaryHTML = (job.salary_min || job.salary_max)
                         ? `<div style="margin-top:6px;font-size:13px;color:var(--text-muted);">
-                               💰 ${job.salary_min ? '₹' + Math.round(job.salary_min).toLocaleString() : ''}
-                               ${job.salary_min && job.salary_max ? ' – ' : ''}
-                               ${job.salary_max ? '₹' + Math.round(job.salary_max).toLocaleString() : ''} /yr
+                               ðŸ’° ${job.salary_min ? 'â‚¹' + Math.round(job.salary_min).toLocaleString() : ''}
+                               ${job.salary_min && job.salary_max ? ' â€“ ' : ''}
+                               ${job.salary_max ? 'â‚¹' + Math.round(job.salary_max).toLocaleString() : ''} /yr
                            </div>`
                         : '';
 
@@ -2428,8 +2428,8 @@
                                 </div>
                                 <div class="job-company">${job.company || ''}</div>
                                 <div style="margin-top:10px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-                                    ${job.location ? `<span style="font-size:13px;color:var(--text-muted);">📍 ${job.location}</span>` : ''}
-                                    ${job.experience_level ? `<span style="font-size:13px;color:var(--text-muted);">💼 ${job.experience_level}</span>` : ''}
+                                    ${job.location ? `<span style="font-size:13px;color:var(--text-muted);">ðŸ“ ${job.location}</span>` : ''}
+                                    ${job.experience_level ? `<span style="font-size:13px;color:var(--text-muted);">ðŸ’¼ ${job.experience_level}</span>` : ''}
                                 </div>
                                 ${salaryHTML}
                             </div>
@@ -2459,7 +2459,7 @@
                             <a class="btn-job btn-primary-job" href="${job.redirect_url || '#'}"
                                target="_blank" rel="noopener"
                                style="text-align:center;text-decoration:none;display:block;">
-                               Apply Now ↗
+                               Apply Now â†—
                             </a>
                         </div>
                     `;
@@ -2482,18 +2482,18 @@
             }
         }
 
-        // ── Resume feedback renderer ─────────────────────────────────────────
+        // â”€â”€ Resume feedback renderer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         function renderFeedbackHTML(score, feedbackText) {
             // Score bar color
             const scoreColor = score >= 70 ? '#2e7d32' : score >= 50 ? '#e65100' : '#c62828';
 
             // Parse labeled sections: STRENGTHS:, IMPROVEMENTS:, MISSING KEYWORDS:, ATS SCORE:, OVERALL VERDICT:
             const sectionDefs = [
-                { key: 'STRENGTHS', icon: '✦', color: '#2e7d32', bg: '#f1f8e9' },
-                { key: 'IMPROVEMENTS', icon: '▲', color: '#e65100', bg: '#fff3e0' },
-                { key: 'MISSING KEYWORDS', icon: '◈', color: '#1565c0', bg: '#e3f2fd' },
-                { key: 'ATS SCORE ESTIMATE', icon: '⊕', color: '#6a1b9a', bg: '#f3e5f5' },
-                { key: 'OVERALL VERDICT', icon: '★', color: '#0b1f3f', bg: '#faf9f7' },
+                { key: 'STRENGTHS', icon: 'âœ¦', color: '#2e7d32', bg: '#f1f8e9' },
+                { key: 'IMPROVEMENTS', icon: 'â–²', color: '#e65100', bg: '#fff3e0' },
+                { key: 'MISSING KEYWORDS', icon: 'â—ˆ', color: '#1565c0', bg: '#e3f2fd' },
+                { key: 'ATS SCORE ESTIMATE', icon: 'âŠ•', color: '#6a1b9a', bg: '#f3e5f5' },
+                { key: 'OVERALL VERDICT', icon: 'â˜…', color: '#0b1f3f', bg: '#faf9f7' },
             ];
 
             // Extract each section content
@@ -2511,7 +2511,7 @@
                 // Render bullet lines
                 const lines = content.split('\n').map(l => l.trim()).filter(Boolean);
                 const linesHTML = lines.map(line => {
-                    const clean = line.replace(/^[•\-*]\s*/, '');
+                    const clean = line.replace(/^[â€¢\-*]\s*/, '');
                     // ATS score and Verdict aren't bullet lists
                     if (sec.key === 'ATS SCORE ESTIMATE' || sec.key === 'OVERALL VERDICT') {
                         return `<div style="font-size:17px;color:${sec.color};font-weight:600;">${clean}</div>`;
@@ -2554,7 +2554,7 @@
                 </div>`;
         }
 
-        // ── Roadmap renderer ─────────────────────────────────────────────────
+        // â”€â”€ Roadmap renderer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         function showRoadmap(idx) {
             // Retrieve roadmap from store (avoids JSON breaking in onclick attributes)
             const roadmapText = (window.roadmapStore && window.roadmapStore[idx]) || '';
@@ -2583,13 +2583,13 @@
                 } else if (/^COURSERA COURSES/i.test(line)) {
                     html += `<div style="margin:16px 0 6px;font-size:13px;text-transform:uppercase;
                                 letter-spacing:3px;color:#0d47a1;font-weight:700;">
-                                🎓 Coursera Courses</div>`;
+                                ðŸŽ“ Coursera Courses</div>`;
 
                     // UDEMY block header
                 } else if (/^UDEMY COURSES/i.test(line)) {
                     html += `<div style="margin:16px 0 6px;font-size:13px;text-transform:uppercase;
                                 letter-spacing:3px;color:#a50034;font-weight:700;">
-                                🎯 Udemy Courses</div>`;
+                                ðŸŽ¯ Udemy Courses</div>`;
 
                     // CERTIFICATIONS header
                 } else if (/^CERTIFICATIONS/i.test(line)) {
@@ -2597,7 +2597,7 @@
                                 background:#e8f5e9;border-left:3px solid #2e7d32;
                                 font-size:13px;text-transform:uppercase;letter-spacing:3px;
                                 color:#2e7d32;font-weight:700;">
-                                🏆 Certifications to Earn</div>`;
+                                ðŸ† Certifications to Earn</div>`;
 
                     // PORTFOLIO PROJECTS header
                 } else if (/^PORTFOLIO PROJECTS/i.test(line)) {
@@ -2605,7 +2605,7 @@
                                 background:#e3f2fd;border-left:3px solid #1565c0;
                                 font-size:13px;text-transform:uppercase;letter-spacing:3px;
                                 color:#1565c0;font-weight:700;">
-                                💻 Portfolio Projects</div>`;
+                                ðŸ’» Portfolio Projects</div>`;
 
                     // TOTAL DURATION
                 } else if (/^TOTAL DURATION/i.test(line)) {
@@ -2618,9 +2618,9 @@
                     html += `<div style="font-size:16px;color:var(--text-muted);margin:8px 0 12px;
                                 font-style:italic;">${txt}</div>`;
 
-                    // Bullet items (lines starting with - or •)
-                } else if (/^[-•]/.test(line)) {
-                    const txt = line.replace(/^[-•]\s*/, '');
+                    // Bullet items (lines starting with - or â€¢)
+                } else if (/^[-â€¢]/.test(line)) {
+                    const txt = line.replace(/^[-â€¢]\s*/, '');
                     const isCoursera = txt.toLowerCase().includes('coursera') ||
                         txt.toLowerCase().includes('google') ||
                         txt.toLowerCase().includes('stanford') ||
@@ -2635,7 +2635,7 @@
                     const dotColor = isCoursera ? '#0d47a1' : isUdemy ? '#a50034' : '#0b1f3f';
                     html += `<div style="display:flex;gap:12px;padding:8px 0;
                                 border-bottom:1px solid #f0f0f0;font-size:16px;line-height:1.6;">
-                                <span style="color:${dotColor};flex-shrink:0;">—</span>
+                                <span style="color:${dotColor};flex-shrink:0;">â€”</span>
                                 <span>${txt}</span>
                             </div>`;
 
@@ -2660,7 +2660,7 @@
             alert('PDF Generation\n\nYour comprehensive development plan will be prepared for download.');
         }
 
-        // Render skills — uses real extracted skills from resume API response
+        // Render skills â€” uses real extracted skills from resume API response
         function renderSkills() {
             const skills = window.currentSkills || [];
             const techContainer = document.getElementById('technicalSkills');
@@ -2772,7 +2772,7 @@
                     ? JSON.stringify({ resume_id: window.currentResumeId })
                     : '{}';
 
-                const res = await fetch("https://career-ai-functions.azurewebsites.net/api/startInterview", {
+                const res = await fetch("https://career-ai-functions-h4gpa8h5cccsghdz.centralindia-01.azurewebsites.net/api/startInterview", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: body
@@ -2831,7 +2831,7 @@
             document.querySelector('.question-text').textContent = 'Tell me about yourself and your professional background.';
             document.querySelector('.question-actions').innerHTML = `
                 <button class="question-button" onclick="startRecording()">
-                    <span id="recordingIcon">⏺</span>
+                    <span id="recordingIcon">âº</span>
                     <span id="recordingText">Start Recording</span>
                 </button>
                 <button class="question-button secondary" onclick="nextQuestion()">Next Question</button>
@@ -2864,7 +2864,7 @@
 
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-                // Explicitly request WebM/Opus — what browsers natively produce
+                // Explicitly request WebM/Opus â€” what browsers natively produce
                 // and what the backend's speech_service.py expects
                 const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
                     ? 'audio/webm;codecs=opus'
@@ -2914,7 +2914,7 @@
             processingDiv.className = 'message interviewer';
             processingDiv.innerHTML = `
                 <div class="message-avatar">I</div>
-                <div class="message-content"><p>⏳ Evaluating your response…</p></div>`;
+                <div class="message-content"><p>â³ Evaluating your responseâ€¦</p></div>`;
             chatMessages.appendChild(processingDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
@@ -2925,7 +2925,7 @@
                 formData.append("audio", audioBlob, "answer.wav");
                 formData.append("question", question);
 
-                const res = await fetch("https://career-ai-functions.azurewebsites.net/api/submitAudioAnswer", {
+                const res = await fetch("https://career-ai-functions-h4gpa8h5cccsghdz.centralindia-01.azurewebsites.net/api/submitAudioAnswer", {
                     method: "POST",
                     body: formData
                 });
@@ -2938,7 +2938,7 @@
                 if (placeholder) placeholder.remove();
 
                 if (!data.success && data.error) {
-                    addChatMessage("⚠️ Could not evaluate: " + data.error, "interviewer");
+                    addChatMessage("âš ï¸ Could not evaluate: " + data.error, "interviewer");
                     return;
                 }
 
@@ -2947,15 +2947,15 @@
                 if (transcript) {
                     addChatMessage(transcript, "user");
                 } else {
-                    addChatMessage("(No speech detected — please try again)", "user");
+                    addChatMessage("(No speech detected â€” please try again)", "user");
                 }
 
                 // Show AI feedback as a nice card
-                const overall = data.overall_score ?? '—';
-                const technical = data.technical_score ?? '—';
-                const communication = data.communication_score ?? '—';
-                const confidence = data.confidence_score ?? '—';
-                const speed = data.speaking_speed ?? '—';
+                const overall = data.overall_score ?? 'â€”';
+                const technical = data.technical_score ?? 'â€”';
+                const communication = data.communication_score ?? 'â€”';
+                const confidence = data.confidence_score ?? 'â€”';
+                const speed = data.speaking_speed ?? 'â€”';
                 const feedback = data.feedback ?? 'No feedback available.';
 
                 addChatMessage(`
@@ -2971,7 +2971,7 @@
                         addChatMessage(interviewQuestions[currentQuestionIndex], "interviewer");
                     }, 2000);
                 } else {
-                    addChatMessage("🎉 Interview complete. Thank you for your time!", "interviewer");
+                    addChatMessage("ðŸŽ‰ Interview complete. Thank you for your time!", "interviewer");
                 }
 
             } catch (err) {
@@ -3064,7 +3064,7 @@
             try {
 
                 const res = await fetch(
-                    "https://career-ai-functions.azurewebsites.net/api/analyzeVideoFrame",
+                    "https://career-ai-functions-h4gpa8h5cccsghdz.centralindia-01.azurewebsites.net/api/analyzeVideoFrame",
                     {
                         method: "POST",
                         body: formData
@@ -3248,7 +3248,7 @@
                         const formData = new FormData();
                         formData.append('audio', audioBlob, 'answer.wav');
                         formData.append('question', question);
-                        const res = await fetch('https://career-ai-functions.azurewebsites.net/api/submitAudioAnswer', {
+                        const res = await fetch('https://career-ai-functions-h4gpa8h5cccsghdz.centralindia-01.azurewebsites.net/api/submitAudioAnswer', {
                             method: 'POST', body: formData
                         });
                         const data = await res.json();
@@ -3320,7 +3320,7 @@
                     } finally {
                         recordButton.disabled = false;
                         recordButton.classList.remove('recording');
-                        recordIcon.textContent = '⏺';
+                        recordIcon.textContent = 'âº';
                         recordText.textContent = 'Start Recording';
                         isRecording = false;
                     }
@@ -3329,7 +3329,7 @@
                 videoMediaRecorder.start();
                 isRecording = true;
                 recordButton.classList.add('recording');
-                recordIcon.textContent = '⏹';
+                recordIcon.textContent = 'â¹';
                 recordText.textContent = 'Stop Recording';
 
             } else if (videoMediaRecorder.state === 'recording') {
@@ -3358,7 +3358,7 @@
                 }
             } else {
                 document.querySelector('.question-text').textContent =
-                    'Interview Complete — Thank you for your participation.';
+                    'Interview Complete â€” Thank you for your participation.';
                 document.querySelector('.question-actions').innerHTML =
                     `<button class="question-button" onclick="endInterview()">End Session</button>`;
             }
