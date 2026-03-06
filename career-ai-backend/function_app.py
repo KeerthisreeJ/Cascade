@@ -3,7 +3,8 @@ import json
 import logging
 import os
 import tempfile
-
+import shutil
+from pydub import AudioSegment
 from services.document_service import analyze_resume
 from services.blob_service import upload_resume
 from services.sql_service import insert_resume, insert_resume_skills
@@ -23,7 +24,7 @@ from services.resume_skill_service import fetch_resume_skills
 CORS_HEADERS = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type, Accept, Origin, X-Requested-With",
 }
 
 
@@ -44,6 +45,10 @@ MAX_FILE_SIZE_MB = 5
 @app.route(route="processResume", methods=["POST"])
 def process_resume(req: func.HttpRequest) -> func.HttpResponse:
 
+    
+    if req.method == "OPTIONS":
+        return func.HttpResponse(status_code=204, headers=CORS_HEADERS)
+    
     logging.info("Resume upload request received.")
 
     try:
@@ -296,11 +301,14 @@ def submit_audio_answer(req: func.HttpRequest) -> func.HttpResponse:
         try:
             import shutil
             from pydub import AudioSegment
-            import pydub.utils
-
-            # Try PATH first, then fall back to known WinGet install location
-            ffmpeg_path  = shutil.which("ffmpeg")
-            ffprobe_path = shutil.which("ffprobe")
+            
+            ffmpeg_path = shutil.which("ffmpeg")
+            if not ffmpeg_path:
+                raise RuntimeError(
+                    "ffmpeg not found. Ensure it's installed in the Azure Function environment."
+                )
+            
+            AudioSegment.converter = ffmpeg_path
 
             if not ffmpeg_path:
                 winget_base = r"C:\Users\hp\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.0.1-full_build\bin"
