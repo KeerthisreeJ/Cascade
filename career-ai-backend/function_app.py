@@ -55,16 +55,26 @@ def process_resume(req: func.HttpRequest) -> func.HttpResponse:
         # -----------------------------
         # 1️⃣ Get File From FormData
         # -----------------------------
-        file = req.files.get("file")
-
+       from werkzeug.formparser import parse_form_data
+        from io import BytesIO
+        
+        stream = BytesIO(req.get_body())
+        
+        _, form, files = parse_form_data(
+            environ={
+                "wsgi.input": stream,
+                "CONTENT_LENGTH": len(req.get_body()),
+                "CONTENT_TYPE": req.headers.get("Content-Type")
+            }
+        )
+        
+        file = files.get("file")
+        
         if not file:
-            return func.HttpResponse(
-                json.dumps({"error": "No file provided"}),
-                status_code=400,
-                mimetype="application/json"
-            )
-
-        file_bytes = file.stream.read()
+            return json_response({"error": "No file uploaded"}, 400)
+        
+        file_bytes = file.read()
+        filename = file.filename
 
         # -----------------------------
         # 2️⃣ File Size Validation
