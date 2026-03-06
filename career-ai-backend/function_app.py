@@ -111,7 +111,7 @@ def process_resume(req: func.HttpRequest) -> func.HttpResponse:
         # -----------------------------
         # 4️⃣ Upload to Blob (Correct Extension)
         # -----------------------------
-        blob_url = upload_resume(file_bytes, file.filename)
+        blob_url = upload_resume(file_bytes, filename)
 
         # -----------------------------
         # 5️⃣ Resume Scoring (Real algorithm)
