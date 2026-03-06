@@ -2292,7 +2292,7 @@
                 formData.append("file", file);
 
                 // Call Azure Function
-                const response = await fetch("http://localhost:7071/api/processResume", {
+                const response = await fetch("https://career-ai-functions.azurewebsites.net/api/processResume", {
                     method: "POST",
                     body: formData
                 });
@@ -2345,7 +2345,7 @@
 
             try {
                 const response = await fetch(
-                    `http://localhost:7071/api/recommendJobs?resume_id=${window.currentResumeId}`
+                    `https://career-ai-functions.azurewebsites.net/api/recommendJobs?resume_id=${window.currentResumeId}`
                 );
 
                 const data = await response.json();
@@ -2772,7 +2772,7 @@
                     ? JSON.stringify({ resume_id: window.currentResumeId })
                     : '{}';
 
-                const res = await fetch("http://localhost:7071/api/startInterview", {
+                const res = await fetch("https://career-ai-functions.azurewebsites.net/api/startInterview", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: body
@@ -2925,7 +2925,7 @@
                 formData.append("audio", audioBlob, "answer.wav");
                 formData.append("question", question);
 
-                const res = await fetch("http://localhost:7071/api/submitAudioAnswer", {
+                const res = await fetch("https://career-ai-functions.azurewebsites.net/api/submitAudioAnswer", {
                     method: "POST",
                     body: formData
                 });
@@ -3064,7 +3064,7 @@
             try {
 
                 const res = await fetch(
-                    "http://localhost:7071/api/analyzeVideoFrame",
+                    "https://career-ai-functions.azurewebsites.net/api/analyzeVideoFrame",
                     {
                         method: "POST",
                         body: formData
@@ -3248,7 +3248,7 @@
                         const formData = new FormData();
                         formData.append('audio', audioBlob, 'answer.wav');
                         formData.append('question', question);
-                        const res = await fetch('http://localhost:7071/api/submitAudioAnswer', {
+                        const res = await fetch('https://career-ai-functions.azurewebsites.net/api/submitAudioAnswer', {
                             method: 'POST', body: formData
                         });
                         const data = await res.json();
