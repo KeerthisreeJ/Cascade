@@ -386,6 +386,8 @@ def analyze_video_frame(req: func.HttpRequest) -> func.HttpResponse:
         return func.HttpResponse(status_code=204, headers=CORS_HEADERS)
 
     logging.info("analyzeVideoFrame request received.")
+    logging.info(f"FACE_ENDPOINT: {os.environ.get('FACE_ENDPOINT')}")
+    logging.info(f"FACE_KEY configured: {'Yes' if os.environ.get('FACE_KEY') else 'No'}")
 
     try:
 
