@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cascade â€” Professional Intelligence</title>
+    <title>Cascade — Professional Intelligence</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Crimson+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
@@ -365,7 +365,7 @@
         }
 
         .slide-features li::before {
-            content: 'â€”';
+            content: '—';
             position: absolute;
             left: 0;
             color: var(--navy);
@@ -574,7 +574,7 @@
         }
 
         .upload-benefits li::before {
-            content: 'âœ“';
+            content: '✓';
             position: absolute;
             left: 0;
             font-size: 24px;
@@ -1155,7 +1155,7 @@
         }
 
         .week-content li::before {
-            content: 'â€”';
+            content: '—';
             position: absolute;
             left: 0;
             color: var(--navy);
@@ -1823,7 +1823,7 @@
                         </ul>
                     </div>
                     <div class="slide-visual">
-                        <span class="slide-icon">ðŸŽ¯</span>
+                        <span class="slide-icon">🎯</span>
                         <div class="slide-caption">Perfect Matches</div>
                     </div>
                 </div>
@@ -1955,7 +1955,7 @@
         </div>
 
         <div class="success-state" id="success">
-            <span class="success-icon">âœ“</span>
+            <span class="success-icon">✓</span>
             <h3>Analysis Complete</h3>
             <p>Your professional profile has been thoroughly evaluated. We have identified several distinguished
                 opportunities for your consideration.</p>
@@ -2361,7 +2361,7 @@
                     return;
                 }
 
-                // Store roadmaps safely â€” avoids JSON.stringify breaking onclick HTML
+                // Store roadmaps safely — avoids JSON.stringify breaking onclick HTML
                 window.roadmapStore = [];
 
                 jobs.forEach((job, i) => {
@@ -2382,8 +2382,8 @@
                             </div>
                            </div>`
                         : `<div class="perfect-banner">
-                            <span class="icon">âœ“</span>
-                            <strong>Perfect Match â€” All requirements met</strong>
+                            <span class="icon">✓</span>
+                            <strong>Perfect Match — All requirements met</strong>
                            </div>`;
 
                     // Acquired skills section (only show if there are any)
@@ -2510,7 +2510,7 @@
                 // Render bullet lines
                 const lines = content.split('\n').map(l => l.trim()).filter(Boolean);
                 const linesHTML = lines.map(line => {
-                    const clean = line.replace(/^[â€¢\-*]\s*/, '');
+                    const clean = line.replace(/^[•\-*]\s*/, '');
                     // ATS score and Verdict aren't bullet lists
                     if (sec.key === 'ATS SCORE ESTIMATE' || sec.key === 'OVERALL VERDICT') {
                         return `<div style="font-size:17px;color:${sec.color};font-weight:600;">${clean}</div>`;
@@ -2582,13 +2582,13 @@
                 } else if (/^COURSERA COURSES/i.test(line)) {
                     html += `<div style="margin:16px 0 6px;font-size:13px;text-transform:uppercase;
                                 letter-spacing:3px;color:#0d47a1;font-weight:700;">
-                                ðŸŽ“ Coursera Courses</div>`;
+                                🎓 Coursera Courses</div>`;
 
                     // UDEMY block header
                 } else if (/^UDEMY COURSES/i.test(line)) {
                     html += `<div style="margin:16px 0 6px;font-size:13px;text-transform:uppercase;
                                 letter-spacing:3px;color:#a50034;font-weight:700;">
-                                ðŸŽ¯ Udemy Courses</div>`;
+                                🎯 Udemy Courses</div>`;
 
                     // CERTIFICATIONS header
                 } else if (/^CERTIFICATIONS/i.test(line)) {
@@ -2604,7 +2604,7 @@
                                 background:#e3f2fd;border-left:3px solid #1565c0;
                                 font-size:13px;text-transform:uppercase;letter-spacing:3px;
                                 color:#1565c0;font-weight:700;">
-                                ðŸ’» Portfolio Projects</div>`;
+                                💻 Portfolio Projects</div>`;
 
                     // TOTAL DURATION
                 } else if (/^TOTAL DURATION/i.test(line)) {
@@ -2617,9 +2617,9 @@
                     html += `<div style="font-size:16px;color:var(--text-muted);margin:8px 0 12px;
                                 font-style:italic;">${txt}</div>`;
 
-                    // Bullet items (lines starting with - or â€¢)
-                } else if (/^[-â€¢]/.test(line)) {
-                    const txt = line.replace(/^[-â€¢]\s*/, '');
+                    // Bullet items (lines starting with - or •)
+                } else if (/^[-•]/.test(line)) {
+                    const txt = line.replace(/^[-•]\s*/, '');
                     const isCoursera = txt.toLowerCase().includes('coursera') ||
                         txt.toLowerCase().includes('google') ||
                         txt.toLowerCase().includes('stanford') ||
@@ -2634,7 +2634,7 @@
                     const dotColor = isCoursera ? '#0d47a1' : isUdemy ? '#a50034' : '#0b1f3f';
                     html += `<div style="display:flex;gap:12px;padding:8px 0;
                                 border-bottom:1px solid #f0f0f0;font-size:16px;line-height:1.6;">
-                                <span style="color:${dotColor};flex-shrink:0;">â€”</span>
+                                <span style="color:${dotColor};flex-shrink:0;">—</span>
                                 <span>${txt}</span>
                             </div>`;
 
@@ -2659,7 +2659,7 @@
             alert('PDF Generation\n\nYour comprehensive development plan will be prepared for download.');
         }
 
-        // Render skills â€” uses real extracted skills from resume API response
+        // Render skills — uses real extracted skills from resume API response
         function renderSkills() {
             const skills = window.currentSkills || [];
             const techContainer = document.getElementById('technicalSkills');
@@ -2863,7 +2863,7 @@
 
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-                // Explicitly request WebM/Opus â€” what browsers natively produce
+                // Explicitly request WebM/Opus — what browsers natively produce
                 // and what the backend's speech_service.py expects
                 const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
                     ? 'audio/webm;codecs=opus'
@@ -2913,7 +2913,7 @@
             processingDiv.className = 'message interviewer';
             processingDiv.innerHTML = `
                 <div class="message-avatar">I</div>
-                <div class="message-content"><p>â³ Evaluating your responseâ€¦</p></div>`;
+                <div class="message-content"><p>â³ Evaluating your response…</p></div>`;
             chatMessages.appendChild(processingDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
@@ -2946,15 +2946,15 @@
                 if (transcript) {
                     addChatMessage(transcript, "user");
                 } else {
-                    addChatMessage("(No speech detected â€” please try again)", "user");
+                    addChatMessage("(No speech detected — please try again)", "user");
                 }
 
                 // Show AI feedback as a nice card
-                const overall = data.overall_score ?? 'â€”';
-                const technical = data.technical_score ?? 'â€”';
-                const communication = data.communication_score ?? 'â€”';
-                const confidence = data.confidence_score ?? 'â€”';
-                const speed = data.speaking_speed ?? 'â€”';
+                const overall = data.overall_score ?? '—';
+                const technical = data.technical_score ?? '—';
+                const communication = data.communication_score ?? '—';
+                const confidence = data.confidence_score ?? '—';
+                const speed = data.speaking_speed ?? '—';
                 const feedback = data.feedback ?? 'No feedback available.';
 
                 addChatMessage(`
@@ -2970,7 +2970,7 @@
                         addChatMessage(interviewQuestions[currentQuestionIndex], "interviewer");
                     }, 2000);
                 } else {
-                    addChatMessage("ðŸŽ‰ Interview complete. Thank you for your time!", "interviewer");
+                    addChatMessage("🎉 Interview complete. Thank you for your time!", "interviewer");
                 }
 
             } catch (err) {
@@ -3357,7 +3357,7 @@
                 }
             } else {
                 document.querySelector('.question-text').textContent =
-                    'Interview Complete â€” Thank you for your participation.';
+                    'Interview Complete — Thank you for your participation.';
                 document.querySelector('.question-actions').innerHTML =
                     `<button class="question-button" onclick="endInterview()">End Session</button>`;
             }
