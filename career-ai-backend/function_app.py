@@ -335,7 +335,7 @@ def submit_audio_answer(req: func.HttpRequest) -> func.HttpResponse:
             audio_segment.export(wav_path, format="wav")
             logging.info("Successfully transcoded WebM to WAV using pydub/ffmpeg")
         except Exception as e:
-            logging.error(f"Failed to transcode audio with pydub: {e}")
+            logging.error(f"Failed to transcode audio: {e}")
             return json_response({
                 "success": False,
                 "error": f"Audio conversion failed — ensure ffmpeg is installed. Detail: {str(e)}"
