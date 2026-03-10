@@ -42,7 +42,7 @@ MAX_FILE_SIZE_MB = 5
 
 
 @app.function_name(name="processResume")
-@app.route(route="processResume", methods=["POST"])
+@app.route(route="processResume", methods=["POST"], auth_level=func.AuthLevel.ANONYMOUS)
 def process_resume(req: func.HttpRequest) -> func.HttpResponse:
 
     
@@ -141,7 +141,7 @@ def process_resume(req: func.HttpRequest) -> func.HttpResponse:
 # 2. Recommend Jobs
 # ─────────────────────────────────────────────
 @app.function_name(name="recommendJobs")
-@app.route(route="recommendJobs", methods=["GET", "OPTIONS"])
+@app.route(route="recommendJobs", methods=["GET", "OPTIONS"], auth_level=func.AuthLevel.ANONYMOUS)
 def recommend_jobs(req: func.HttpRequest) -> func.HttpResponse:
 
     # Handle CORS preflight
@@ -172,7 +172,7 @@ def recommend_jobs(req: func.HttpRequest) -> func.HttpResponse:
 # 3. Get Resume Skills (for Skills dashboard)
 # ─────────────────────────────────────────────
 @app.function_name(name="getResumeSkills")
-@app.route(route="getResumeSkills", methods=["GET", "OPTIONS"])
+@app.route(route="getResumeSkills", methods=["GET", "OPTIONS"], auth_level=func.AuthLevel.ANONYMOUS)
 def get_resume_skills(req: func.HttpRequest) -> func.HttpResponse:
 
     if req.method == "OPTIONS":
@@ -201,7 +201,7 @@ def get_resume_skills(req: func.HttpRequest) -> func.HttpResponse:
 # 4. Start Interview
 # ─────────────────────────────────────────────
 @app.function_name(name="startInterview")
-@app.route(route="startInterview", methods=["POST", "OPTIONS"])
+@app.route(route="startInterview", methods=["POST", "OPTIONS"], auth_level=func.AuthLevel.ANONYMOUS)
 def start_interview(req: func.HttpRequest) -> func.HttpResponse:
 
     if req.method == "OPTIONS":
@@ -266,7 +266,7 @@ def start_interview(req: func.HttpRequest) -> func.HttpResponse:
 # 5. Submit Audio Answer
 # ─────────────────────────────────────────────
 @app.function_name(name="submitAudioAnswer")
-@app.route(route="submitAudioAnswer", methods=["POST", "OPTIONS"])
+@app.route(route="submitAudioAnswer", methods=["POST", "OPTIONS"], auth_level=func.AuthLevel.ANONYMOUS)
 def submit_audio_answer(req: func.HttpRequest) -> func.HttpResponse:
 
     if req.method == "OPTIONS":
@@ -370,7 +370,7 @@ def submit_audio_answer(req: func.HttpRequest) -> func.HttpResponse:
 # 6. Analyze Video Frame
 # ─────────────────────────────────────────────
 @app.function_name(name="analyzeVideoFrame")
-@app.route(route="analyzeVideoFrame", methods=["POST", "OPTIONS"])
+@app.route(route="analyzeVideoFrame", methods=["POST", "OPTIONS"], auth_level=func.AuthLevel.ANONYMOUS)
 def analyze_video_frame(req: func.HttpRequest) -> func.HttpResponse:
 
     if req.method == "OPTIONS":
