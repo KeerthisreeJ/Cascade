@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -2830,7 +2830,7 @@
             document.querySelector('.question-text').textContent = 'Tell me about yourself and your professional background.';
             document.querySelector('.question-actions').innerHTML = `
                 <button class="question-button" onclick="startRecording()">
-                    <span id="recordingIcon">âº</span>
+                    <span id="recordingIcon">🎤</span>
                     <span id="recordingText">Start Recording</span>
                 </button>
                 <button class="question-button secondary" onclick="nextQuestion()">Next Question</button>
@@ -2913,7 +2913,7 @@
             processingDiv.className = 'message interviewer';
             processingDiv.innerHTML = `
                 <div class="message-avatar">I</div>
-                <div class="message-content"><p>â³ Evaluating your response…</p></div>`;
+                <div class="message-content"><p>⏳ Evaluating your response…</p></div>`;
             chatMessages.appendChild(processingDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
@@ -2937,7 +2937,7 @@
                 if (placeholder) placeholder.remove();
 
                 if (!data.success && data.error) {
-                    addChatMessage("âš ï¸ Could not evaluate: " + data.error, "interviewer");
+                    addChatMessage("⚠️ Could not evaluate: " + data.error, "interviewer");
                     return;
                 }
 
