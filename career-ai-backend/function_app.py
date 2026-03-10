@@ -303,7 +303,6 @@ def submit_audio_answer(req: func.HttpRequest) -> func.HttpResponse:
                 logging.info("ffmpeg not in PATH. Assuming Linux environment and downloading static binary...")
                 import urllib.request
                 import tarfile
-                import os
                 
                 # Fetch static ffmpeg build for linux
                 ffmpeg_url = "https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz"
