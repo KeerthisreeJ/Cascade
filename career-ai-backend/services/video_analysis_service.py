@@ -7,9 +7,11 @@ FACE_KEY = os.environ.get("FACE_KEY")
 
 def analyze_face(image_bytes):
 
-    url = f"{FACE_ENDPOINT}/face/v1.0/detect"
+    base_url = FACE_ENDPOINT.rstrip('/') if FACE_ENDPOINT else ""
+    url = f"{base_url}/face/v1.0/detect"
 
     params = {
+        "returnFaceId": "true",
         "returnFaceAttributes": "headPose"
     }
 
@@ -18,12 +20,20 @@ def analyze_face(image_bytes):
         "Content-Type": "application/octet-stream"
     }
 
-    response = requests.post(
-        url,
-        params=params,
-        headers=headers,
-        data=image_bytes
-    )
+    import logging
+    logging.info(f"Calling Face API at: {url}")
+
+    try:
+        response = requests.post(
+            url,
+            params=params,
+            headers=headers,
+            data=image_bytes,
+            timeout=10
+        )
+    except Exception as e:
+        logging.error(f"Face API Request failed: {e}")
+        return {"confidence_score": 0, "eye_contact": False, "emotion": "connection_error"}
 
     try:
         faces = response.json()
