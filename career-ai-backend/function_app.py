@@ -293,28 +293,40 @@ def submit_audio_answer(req: func.HttpRequest) -> func.HttpResponse:
             f.write(file.stream.read())
 
         # ─────────────────────────
-        # Convert WebM to true PCM WAV
-        # ─────────────────────────
         try:
             import shutil
             from pydub import AudioSegment
             
             ffmpeg_path = shutil.which("ffmpeg")
+            ffprobe_path = shutil.which("ffprobe")
             if not ffmpeg_path:
-                raise RuntimeError(
-                    "ffmpeg not found. Ensure it's installed in the Azure Function environment."
-                )
+                logging.info("ffmpeg not in PATH. Assuming Linux environment and downloading static binary...")
+                import urllib.request
+                import tarfile
+                import os
+                
+                # Fetch static ffmpeg build for linux
+                ffmpeg_url = "https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz"
+                tar_path = os.path.join(tempfile.gettempdir(), "ffmpeg.tar.xz")
+                extract_dir = os.path.join(tempfile.gettempdir(), "ffmpeg_extracted")
+                
+                if not os.path.exists(extract_dir):
+                    logging.info("Downloading ffmpeg...")
+                    urllib.request.urlretrieve(ffmpeg_url, tar_path)
+                    os.makedirs(extract_dir, exist_ok=True)
+                    logging.info("Extracting ffmpeg...")
+                    with tarfile.open(tar_path, "r:xz") as tar:
+                        tar.extractall(path=extract_dir)
+                
+                # Locate extracted binaries
+                extracted_folder = [f for f in os.listdir(extract_dir) if f.startswith("ffmpeg-")][0]
+                ffmpeg_path = os.path.join(extract_dir, extracted_folder, "ffmpeg")
+                ffprobe_path = os.path.join(extract_dir, extracted_folder, "ffprobe")
+                
+                # Ensure they are executable
+                os.chmod(ffmpeg_path, 0o755)
+                os.chmod(ffprobe_path, 0o755)
             
-            AudioSegment.converter = ffmpeg_path
-
-            if not ffmpeg_path:
-                winget_base = r"C:\Users\hp\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.0.1-full_build\bin"
-                ffmpeg_path  = os.path.join(winget_base, "ffmpeg.exe")
-                ffprobe_path = os.path.join(winget_base, "ffprobe.exe")
-
-            if not os.path.exists(ffmpeg_path):
-                raise RuntimeError(f"ffmpeg not found at: {ffmpeg_path}")
-
             AudioSegment.converter = ffmpeg_path
             AudioSegment.ffmpeg = ffmpeg_path
             pydub.utils.get_prober_name = lambda: ffprobe_path
